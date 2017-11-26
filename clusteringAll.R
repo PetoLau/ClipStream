@@ -10,16 +10,15 @@ my_knn <- function(data, query) {
 }
 
 clusterAll <- function(data, k_low, k_high, ncores = detectCores()-1, freq = 48){
-  
-  # clip_oom <- FeaClipRep(data)
-  clip_oom <- repr_matrix(data,
-                          func = repr_feaclip, windowing = T, win_size = freq)
+
+  clip_oom <- repr_matrix(data, func = repr_feaclip,
+                          windowing = T, win_size = freq)
   
   # detect outliers
   outliers <- detectOutliersCustom(clip_oom)
   
   # clustering
-  clip_filtered <- clip_oom[-outliers$outliers]
+  clip_filtered <- clip_oom[-outliers$outliers,]
   clus_res <- clusterOptimKmedoidsDB(clip_filtered, k_low, k_high, ncores, criterium = "Davies_Bouldin")
   
   clustering <- outliers$class
@@ -48,7 +47,7 @@ clusterRepr <- function(data, data_rep, k_low, k_high, ncores = 3){
   outliers <- detectOutliersCustom(data_rep)
   
   # clustering
-  clip_filtered <- data_rep[-outliers$outliers]
+  clip_filtered <- data_rep[-outliers$outliers,]
   clus_res <- clusterOptimKmedoidsDB(clip_filtered, k_low, k_high, ncores, criterium = "Davies_Bouldin")
   
   clustering <- outliers$class

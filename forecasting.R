@@ -1,8 +1,5 @@
 simRpart <- function(Y, K, freq = 48, h = 48){
   
-  # Y <- data_sum[1:(21*seas)]
-  
-  K <- K
   data_ts <- msts(Y, seasonal.periods = c(freq, freq*7))
   
   fuur <- fourier(data_ts, K = c(K, K*2))
@@ -116,7 +113,6 @@ simRFLag <- function(Y, freq = 48, h = 48){
 
 simCtreeFur <- function(Y, K, freq = 48, h = 48){
   
-  K <- K
   data_ts <- msts(Y, seasonal.periods = c(freq, freq*7))
   
   fuur <- fourier(data_ts, K = c(K, K*2))
@@ -148,7 +144,6 @@ simCtreeFur <- function(Y, K, freq = 48, h = 48){
 
 simRFFur <- function(Y, K, freq = 48, h = 48){
   
-  K <- K
   data_ts <- msts(Y, seasonal.periods = c(freq, freq*7))
   
   fuur <- fourier(data_ts, K = c(K, K*2))

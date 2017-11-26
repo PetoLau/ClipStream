@@ -1,5 +1,7 @@
 source("forecasting.R")
 
+# these functions run only on linux machines (because of makeForkCluster function)
+
 pickwindow <- function(data, N.win){
   
   data_sub <- data[N.slid.win %in% N.win, lapply(Load, as.vector), by = N.K]

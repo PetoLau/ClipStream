@@ -1,13 +1,12 @@
 detectOutliersCustom <- function(data) {
   
-  # data <- results$representation
-  
   p <- ncol(data)
   
-  clip_out_10 <- data[, seq(2, p, by = 8), with = F]
-  # clip_out3 <- data[, seq(4, p, by = 9), with = F]
-  clip_out_jumps <- data[, seq(4, p, by = 8), with = F]
+  # subset sum_1 and jumps
+  clip_out_10 <- data[, seq(2, p, by = 8)]
+  clip_out_jumps <- data[, seq(4, p, by = 8)]
   
+  # compute quartiles and find outliers
   jumps <- rowMeans(clip_out_jumps)
   jumps <- which(jumps > 1.5*summary(jumps)[5])
   zero_one <- rowMeans(clip_out_10)

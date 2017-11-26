@@ -30,8 +30,6 @@ streamClust <- function(dataset, k.min, k.max, freq = 48) {
  # Main cycle
  for(i in 1:(n_days-1)){
   
-  # i <- 2
-  
   cd_info <- cdTest(results$final_ts)
   
   if(cd_prev$cd == FALSE & cd_info$cd == FALSE & cd_info$n_cd > cd_prev$n_cd){
@@ -56,7 +54,7 @@ streamClust <- function(dataset, k.min, k.max, freq = 48) {
     data_new <- data_oom[, tail(seq_len(ncol(data_oom)), freq), with = F]
     
     clip_new <- t(sapply(1:nrow(data_new), function(x) repr_feaclip(unlist(data_new[x,]))))
-    clip_oom <- data.table(clip_oom[, -(1:ncol(clip_new)), with = F], clip_new)
+    clip_oom <- cbind(clip_oom[, -(1:ncol(clip_new))], clip_new)
     
     if(max(results$clustering) > k.min){
       k_min <- max(results$clustering) - 1
@@ -74,7 +72,7 @@ streamClust <- function(dataset, k.min, k.max, freq = 48) {
     data_new <- data_oom[, tail(seq_len(ncol(data_oom)), freq), with = F]
     
     clip_new <- t(sapply(1:nrow(data_new), function(x) repr_feaclip(unlist(data_new[x,]))))
-    results$representation <- data.table(clip_oom[, -(1:ncol(clip_new)), with = F], clip_new)
+    results$representation <- cbind(clip_oom[, -(1:ncol(clip_new))], clip_new)
     
     sums_clustered <- t(sapply(unique(results$clustering), function(x) colSums(check.matrix(data_oom[results$clustering == x,]))))
     results$final_ts <- t(sapply(unique(results$merge_ts), 

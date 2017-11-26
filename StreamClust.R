@@ -6,11 +6,12 @@ gc()
 
 setwd("C:\\Users\\Peter\\Downloads\\ProjektBD\\StreamClustering\\Repo\\ClipStream\\")
 
-library(ggplot2)
+# library(ggplot2)
 library(data.table)
 library(parallel)
 library(cluster)
-library(TSrepr)
+library(clusterCrit)
+library(TSrepr) # install via devtools::install_github('petolau/TSrepr')
 library(kSamples)
 library(rpart)
 library(party)
@@ -23,7 +24,7 @@ library(randomForest)
 data <- fread("path")
 seas <- 48
 
-# Dynamic clustering - DFT ----
+# Offline batch clustering - DFT ----
 source("RepresentationsWeekly.R") # read DFT computations
 
 data.clust <- data.frame(N.slid.win = 0, N.K = 0, Load = 0)
@@ -64,10 +65,13 @@ str(data.clust)
 
 write.table(data.clust, "DFT_Kmed.csv", row.names = F, col.names = T, quote = F)
 
-# Stream Clustering - FeaClip ----
+# Multiple Data Streams Clustering - ClipStream with FeaClip ----
 source("ClusterStreamResults.R")
 
-res_clipstream <- streamClust(data, k.min = 8, k.max = 16)
+# optional - subset time series data
+# data <- trainSetHack[, 1:(seas*28), with = F]
+
+res_clipstream <- streamClust(data, k.min = 8, k.max = 16, freq = seas)
 
 summary(res_clipstream$data.clust)
 summary(res_clipstream$info)

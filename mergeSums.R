@@ -14,8 +14,6 @@ check.matrix2 <- function(mat) {
 
 mergeClusters <- function(data, clustering, freq = 48) {
   
-  # data <- data_oom
-  
   period <- freq * 7
   slid.win <- ncol(data) / freq
   
