@@ -21,6 +21,7 @@ library(doParallel)
 library(randomForest)
 
 # Data reading ----
+# data must be in the format where time series streams are in rows of a matrix or a data.frame
 data <- fread("path")
 seas <- 48
 
