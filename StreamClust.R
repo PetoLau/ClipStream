@@ -1,10 +1,6 @@
 # Header ----
-rm(list=ls())
-gc()
-
-# setwd("/home/user/StreamClust")
-
-setwd("C:\\Users\\Peter\\Downloads\\ProjektBD\\StreamClustering\\Repo\\ClipStream\\")
+# rm(list=ls())
+# gc()
 
 # library(ggplot2)
 library(data.table)
