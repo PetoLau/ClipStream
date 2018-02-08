@@ -23,6 +23,7 @@ seas <- 48
 
 # Offline batch clustering - DFT ----
 source("RepresentationsWeekly.R") # read DFT computations
+source("optimalClustering.R") # K-medoids
 
 data.clust <- data.frame(N.slid.win = 0, N.K = 0, Load = 0)
 # clust.res <- data.frame(N.slid.win = 0, Class = 0, ID = 0)
