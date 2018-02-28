@@ -22,7 +22,6 @@ data <- fread("path")
 seas <- 48
 
 # Offline batch clustering - DFT ----
-source("RepresentationsWeekly.R") # read DFT computations
 source("optimalClustering.R") # K-medoids
 
 data.clust <- data.frame(N.slid.win = 0, N.K = 0, Load = 0)
@@ -35,14 +34,11 @@ days_for <- ncol(data_oom)/seas - win
 for(k in 0:(days_for-1)){
   
   oomDT.select <- data_oom[, ((k*seas)+1):((k+win)*seas), with = F]
-  # oomDT.sel.scale <- t(apply(oomDT.select, 1, normalizeSpec))
-  # oomDT.sel.scale <- data.matrix(t(apply(oomDT.select, 1, min_max_normalize)))
+
+  reprs <- repr_matrix(oomDT.select, func = repr_dft, args = list(coef = 6),
+                       normalise = TRUE, func_norm = norm_min_max)
   
-  reprs <- DFTRep(oomDT.select)
-  repr_z <- data.matrix(t(apply(reprs, 1, min_max_normalize)))
-  # repr_z <- MedianRep(oomDT.sel.scale)
-  
-  km_res <- clusterOptimKmedoidsDB(repr_z, 8, 18, 8)$clustering
+  km_res <- clusterOptimKmedoidsDB(reprs, 8, 18, 8)$clustering
   
   km_sums <- t(sapply(1:length(unique(km_res)), function(x) colSums(oomDT.select[km_res == x,])))
   

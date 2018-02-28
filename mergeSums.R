@@ -14,9 +14,6 @@ check.matrix2 <- function(mat) {
 
 mergeClusters <- function(data, clustering, freq = 48) {
   
-  period <- freq * 7
-  slid.win <- ncol(data) / freq
-  
   sums_clustered <- t(sapply(unique(clustering), function(x) colSums(check.matrix(data[clustering == x,]))))
 
   clip_sums <- repr_matrix(sums_clustered,

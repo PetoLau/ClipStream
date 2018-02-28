@@ -53,7 +53,7 @@ streamClust <- function(dataset, k.min, k.max, freq = 48) {
     data_oom <- oomDT[, ((i*freq)+1):((i+win)*freq), with = F]
     data_new <- data_oom[, tail(seq_len(ncol(data_oom)), freq), with = F]
     
-    clip_new <- t(sapply(1:nrow(data_new), function(x) repr_feaclip(unlist(data_new[x,]))))
+    clip_new <- repr_matrix(data_new, func = repr_feaclip)
     clip_oom <- cbind(clip_oom[, -(1:ncol(clip_new))], clip_new)
     
     if(max(results$clustering) > k.min){
@@ -71,7 +71,7 @@ streamClust <- function(dataset, k.min, k.max, freq = 48) {
     data_oom <- oomDT[, ((i*freq)+1):((i+win)*freq), with = F]
     data_new <- data_oom[, tail(seq_len(ncol(data_oom)), freq), with = F]
     
-    clip_new <- t(sapply(1:nrow(data_new), function(x) repr_feaclip(unlist(data_new[x,]))))
+    clip_new <- repr_matrix(data_new, func = repr_feaclip)
     results$representation <- cbind(clip_oom[, -(1:ncol(clip_new))], clip_new)
     
     sums_clustered <- t(sapply(unique(results$clustering), function(x) colSums(check.matrix(data_oom[results$clustering == x,]))))
