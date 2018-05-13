@@ -1,15 +1,27 @@
-cdTest <- function(data, alpha = 0.05, freq = 48){
+ad_test_edit <- function(x) {
   
-  # Normalise time series
-  ts_news <- sapply(seq_len(nrow(data)),
-                    function(x) norm_min_max(tail(data[x,], 3*freq)))
+  if (length(unique(x)) == 1) {
+    return(1)
+  } else {
+    return(ad.test(x)$ad[1, 3])
+  }
+}
+
+cdTest <- function(data, alpha = 0.05, freq = 48) {
   
-  ts_olds <- sapply(seq_len(nrow(data)),
-                    function(x) norm_min_max(head(tail(data[x,], 10*freq), 3*freq)))
+  p <- ncol(data)
   
+  freq_win <- (p/freq)/7
+  win <- p/freq_win
+  
+  # subset weeks and normalise them
+  ts_test <- lapply(1:nrow(data),
+                    function(i) lapply(0:(freq_win-1),
+                                       function(j) norm_min_max(data[i,((win*j)+1):((win*j)+win)])))
+
   # Anderson-Darling test
-  ad_pvalues <- sapply(seq_len(nrow(data)),
-                       function(x) ad.test(ts_olds[,x], ts_news[,x])$ad[1, 3])
+  ad_pvalues <- sapply(seq_len(length(ts_test)),
+                       function(x) ad_test_edit(ts_test[[x]]))
   
   # EDF change detected or not
   n_concept_drifts <- length(which(ad_pvalues < alpha))
