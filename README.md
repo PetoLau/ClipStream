@@ -6,4 +6,8 @@ This repository is for sharing the source code for the paper: "Interpretable mul
 
 Open data available for experiments: [London smart meter dataset](https://www.openml.org/d/41060).
 
+Citation:
+
+ * Laurinec, P., Lucká, M. (2018) Interpretable multiple data streams clustering with clipped streams representation for the improvement of electricity consumption forecasting. Data Mining and Knowledge Discovery. doi: [10.1007/s10618-018-0598-2](https://doi.org/10.1007/s10618-018-0598-2)
+
 You can read more about my research here: [petolau.github.io/research/](https://petolau.github.io/research/)
