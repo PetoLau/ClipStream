@@ -17,7 +17,20 @@ library(foreign)
 
 # Data reading ----
 # data must be in the format where time series streams are in rows of a matrix or a data.frame
+
+# Get the data directly from OpenML app
+# Firstly, install these packages:
+# install.packages("OpenML")
+# install.packages("farff")
+
+# Secondly, Read the data:
+data <- OpenML::getOMLDataSet(data.id = 41060)
+data <- as.data.table(data$data)
+
+# Or read downloaded data from OpenML:
 data <- as.data.table(read.arff("London_5months_5066ID.ARFF"))
+
+# choose daily season
 seas <- 48
 
 # Offline batch clustering - benchmarks ----
