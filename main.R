@@ -18,7 +18,7 @@ library(foreign)
 # Data reading ----
 # data must be in the format where time series streams are in rows of a matrix or a data.frame
 
-# Get the data directly from OpenML app
+# Get the London data directly from OpenML app
 # Firstly, install these packages:
 # install.packages("OpenML")
 # install.packages("farff")
